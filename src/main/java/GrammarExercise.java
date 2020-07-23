@@ -10,6 +10,13 @@ public class GrammarExercise {
         String firstWordList = "";
         String secondWordList = "";
 
+        //命令行输入
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Please input word list1: ");
+        firstWordList = scanner.next();
+        System.out.print("Please input word list2: ");
+        secondWordList = scanner.next();
+
         List<String> result = findCommonWordsWithSpace(firstWordList,secondWordList);
         System.out.print(result);
         //按要求输出到命令行
@@ -18,12 +25,6 @@ public class GrammarExercise {
 
     public static List<String> findCommonWordsWithSpace(String firstWordList, String secondWordList) {
         //在这编写实现代码
-        //命令函读入, 并创建Stream
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Please input word list1: ");
-        firstWordList = scanner.next();
-        System.out.print("Please input word list2: ");
-        secondWordList = scanner.next();
         List firstArr = Arrays.asList(firstWordList.split(","));
         List secondArr = Arrays.asList(secondWordList.split(","));
 
@@ -61,12 +62,21 @@ public class GrammarExercise {
                             }
                     );}
             );
+            //commonWords中的每一个单词添加space
+            List commonWordsList = new ArrayList();
+            commonWords.stream().forEach(
+                word -> {
+                    commonWordsList.add(((String) word).replaceAll("", " ").trim().toUpperCase());
+                }
+            );
+
             //给输出单词排序
             outputWords.stream().sorted().forEach(
                     word -> System.out.print(word + " ")
             );
             System.out.println();
-            return new ArrayList(commonWords);
+
+            return commonWordsList;
         } else {
             throw new RuntimeException("input not valid");
         }
